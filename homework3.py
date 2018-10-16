@@ -3,7 +3,7 @@ from matplotlib import pylab as pl
 from math import *
 #write by Chen Yinan
 class baseball :         
-    def __init__(self,alpha=35,v_init=25,y_init=0,theta_init=24,omega=0.4*pi,dt=0.01):  #alpha is the  ,theta is the inital orientations of the stitches
+    def __init__(self,theta_init=31,omega=0.4*pi,v_init=30.6,alpha=20,y_init=1,dt=0.01):  #alpha is the  ,theta is the inital orientations of the stitches
         self.dt=dt                                                                  #alpha,theta shoule be degrees(角度) rather than randians（弧度）                            
         self.v_inti=v_init
         self.alpha_r=radians(alpha)                                   #translate degree into randian
@@ -23,6 +23,7 @@ class baseball :
         vy=self.vy
         vz=self.vz
         theta=[self.theta]
+
         self.f=[0]
         for i in range(100000000):
             
@@ -47,30 +48,54 @@ class baseball :
             self.t.append(self.t[i-1]+self.dt)
             if self.x[i]>60:                              #本垒
                break
-            #if self.y[i]<0 :
-            #    j=i
-            #    break
-        #b=-self.y[j]/self.y[j-1]
-        #self.x[j]=(self.x[j]+b*self.x[j-1])/(1+b)
-        #self.y[j]=0
-        #self.theta_t=theta
-        print("done")
+            elif self.y[i]<0 :
+                j=i
+                break
+ 
+        
     def showResults_f(self,style='g',label1='??'):
         pl.plot(self.theta_t,self.f,style,label=label1)                                      
         pl.xlabel('theta/degree')
         pl.ylabel('force/weight')
         
-    def showResults(self,style='',label1='??'):       #style=风格，label=图例
+    def showResults(self,label1='??',style=''):       #style=风格，label=图例
         pl.plot(self.x,self.z,style,label=label1)                                      
         pl.xlabel('x/m')
         pl.ylabel('z/m')
-        #pl.ylim(-0.5,0.2)
-        #pl.xlim(0,51000)
-        #pl.ylim(0,20000) 
+     
 
-a=baseball()
+
+
+
+a=baseball(90,0,40.25,20)
 a.calculate_WithDrag()
 a.showResults()
 pl.show()
+vInit =20
+#for i in range(5):
+#    label="vInit="
+#    vstr='{:.2f}'.format(vInit)
+#    label+=vstr+"m/s"
+#    a=baseball(31,0.2*pi,vInit)
+#    a.calculate_WithDrag()
+#    a.showResults(label)
+#    vInit+=1
+
+#pl.legend(loc='upper left')  
+
+
+#omega =0.4*pi;
+
+#for i in range(5):
+#    label="omega="
+#    omegastr='{:.2f}'.format(omega)
+#    label+=omegastr+"r/s"
+#    a=baseball(31,omega)
+#    a.calculate_WithDrag()
+#    a.showResults(label)
+#    omega+=0.02*pi
+
+#pl.legend(loc='upper left')  
+#pl.show()
 
 
